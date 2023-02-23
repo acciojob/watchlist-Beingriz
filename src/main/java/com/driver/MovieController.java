@@ -5,6 +5,8 @@ import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
 
+import java.util.List;
+
 @RestController
 public class MovieController {
     @Autowired
@@ -43,8 +45,9 @@ public class MovieController {
         return new ResponseEntity(movieService.getMoviesByDirectorName(directorName), HttpStatus.OK);
     }
     @GetMapping("/movies/get-all-movies") // Displaying All Movies
-    ResponseEntity findAllMovies(){
-        return new ResponseEntity(movieService.findAllMovies(), HttpStatus.OK);
+    ResponseEntity<List<String>> findAllMovies(){
+        List<String> movieList =  movieService.findAllMovies();
+        return new ResponseEntity(movieList, HttpStatus.OK);
     }
     @DeleteMapping("/movies/delete-director-by-name") // Deleting director by Name
     ResponseEntity deleteDirectorByName(@RequestParam("name") String directorName){
