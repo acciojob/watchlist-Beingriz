@@ -111,12 +111,13 @@ public class MovieRepository {
 //    Return success message wrapped in a ResponseEntity object
 //    Controller Name - deleteDirectorByName
     public void deleteDirectorByName(String directorName){
-        if(director_db.containsKey(directorName) && directorMovie_db.containsKey(directorName)){
-            directorMovie_db.remove(directorName);
-            director_db.remove(directorName);
-        } else if (director_db.containsKey(directorName)) {
-            director_db.remove(directorName);
-        } else if (directorMovie_db.containsKey(directorName)) {
+        List<String> movieList;
+        if(directorMovie_db.containsKey(directorName)) {
+            movieList = directorMovie_db.get(directorName);
+            for (String movie : movieList) {
+                if(movie_db.containsKey(movie)) movie_db.remove(movie);
+            }
+            if(director_db.containsKey(directorName)) directorMovie_db.remove(directorName);
             directorMovie_db.remove(directorName);
         }
     }
